@@ -11,3 +11,12 @@ class UploadNetworkForm(forms.ModelForm):
         fields = ['network_file']
         widgets = {'network_file': FileInput(
             attrs={'class': 'form-control-file', 'id': 'network_file', 'label': 'Network File'})}
+
+
+class GenerateRandomNetworkForm(forms.Form):
+    number_of_nodes = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'id': 'number_of_nodes', 'placeholder': '# of Nodes'}), required=False)
+    probability = forms.FloatField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'id': 'probability', 'placeholder': 'Probability'}), required=False)

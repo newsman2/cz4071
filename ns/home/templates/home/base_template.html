@@ -24,6 +24,7 @@
       }
 
 
+
     </style>
 
 
@@ -39,13 +40,15 @@
     <script src="{% static 'home/js/popper.min.js' %}"></script>
     <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
 
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
     {% block head %}
     {% endblock %}
 
 </head>
-<body class="text-center">
 
+<body>
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead mb-auto">
@@ -60,15 +63,11 @@
     </header>
 
     <main role="main" class="inner cover">
-        <h1 class="cover-heading">Welcome</h1>
 
-        <p class="lead">Begin your journey today! Explore the power of network.</p>
 
-        <form class="" action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% include 'home/form_template.html' %}
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
+        {% block content %}
+        {% endblock %}
+
 
     </main>
 
@@ -79,6 +78,11 @@
     </footer>
 </div>
 
-
 </body>
+
+
+
+
+
+
 </html>

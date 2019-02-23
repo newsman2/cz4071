@@ -3,9 +3,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from . import path
-
-
-from randomnetwork import plot_util
+from . import plot_util
 
 
 def calculate_no_of_edges(n, p):

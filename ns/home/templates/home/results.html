@@ -1,0 +1,26 @@
+{% extends 'home/base_template.html' %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row" style="border: 1px solid black">
+        {#<div id="plot_container" class="col-md-8 col-md-offset-2">{{plot|safe}}</div>#}
+        <div class="col-md-12">{{plot|safe}}</div>
+    </div>
+</div>
+
+<p>
+    Probability: {{ p }}<br>
+    Nodes: {{ expected_no_of_nodes }}<br>
+    Expected # of edges: {{ expected_no_of_edges }}<br>
+    Degree Distribution File Name: {{ expected_degree_distribution_plot_file_name }}<br>
+    Expected Average Degree: {{ expected_average_degree }}<br>
+    Expected Regime Type: {{ expected_regime_type }}<br>
+    Expected Average Distance: {{ expected_average_distance }}<br>
+    Expected Clustering Coefficient: {{ expected_clustering_coefficient }}
+</p>
+
+
+
+
+{% endblock %}
