@@ -62,6 +62,7 @@ class ResultsView(View):
             'expected_no_of_nodes': properties['expected_no_of_nodes'],
             'expected_no_of_edges': properties['expected_no_of_edges'],
             'expected_degree_distribution_plot_file_name': properties['expected_degree_distribution_plot_file_name'],
+            'degree_distribution_plot_path': settings.MEDIA_URL+'/plot/'+properties['expected_degree_distribution_plot_file_name'],
             'expected_average_degree': properties['expected_average_degree'],
             'expected_regime_type': properties['expected_regime_type'],
             'expected_average_distance': properties['expected_average_distance'],

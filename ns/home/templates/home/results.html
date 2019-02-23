@@ -20,6 +20,9 @@
     Expected Clustering Coefficient: {{ expected_clustering_coefficient }}
 </p>
 
+{% if expected_degree_distribution_plot_file_name %}
+<img src="{{ degree_distribution_plot_path }}" alt="{{ expected_degree_distribution_plot_file_name }}">
+{% endif %}
 
 
 
