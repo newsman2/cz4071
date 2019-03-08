@@ -1,0 +1,37 @@
+{% extends 'home/base_template.html' %}
+{% block content %}
+
+
+
+
+
+
+
+{% if is_too_big %}
+<p class="lead">The network is too big!</p>
+
+<!--
+<div class="container">
+    <div class="row" style="border: 1px solid black">
+        {#<div id="plot_container" class="col-md-8 col-md-offset-2">{{plot|safe}}</div>#}
+        <div class="col-md-12">{{plot|safe}}</div>
+    </div>
+</div>
+-->
+
+<p>
+    Nodes: {{ no_of_nodes }}<br>
+    Edges: {{ no_of_edges }}<br>
+    <!--PLOT PATH: {{ degree_distribution_plot_path }}<br>
+    FILE NAME: {{ degree_distribution_plot_path_file_name }}<br>-->
+</p>
+
+{% endif %}
+
+
+<img src="{{ degree_distribution_plot_path }}" alt="{{ degree_distribution_plot_path_file_name }}">
+
+
+
+
+{% endblock %}

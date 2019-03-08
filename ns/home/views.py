@@ -4,7 +4,9 @@ from .forms import UploadNetworkForm, GenerateRandomNetworkForm
 import pandas as pd
 from ns import settings
 from django.shortcuts import redirect
-from .utils.random_network import plot_random_interactive_network, _compute_random_network_properties
+from .utils.random_network import _compute_random_network_properties
+from .utils.real_network.real_network import _compute_real_network_properties, _load_graph_csv_from_file_system, _is_network_too_big, plot_real_interactive_network
+from multiprocessing import Pool
 
 
 # Create your views here.
@@ -30,23 +32,22 @@ class HomeView(View):
 
                 file_name, file_format = network_filename.rsplit(".", maxsplit=1)
                 file.save()
-
-            # convert_txt_to_csv(file_name, file_format, network_file)
-            return redirect('home:HomeView')
+                convert_txt_to_csv(file_name, file_format, network_file)
+            return redirect('home:RealNetworkResults', network_filename=file_name)
 
         elif 'btn_generate' in request.POST:
             if form_generate.is_valid():
                 n = request.POST['number_of_nodes']
                 p = request.POST['probability']
 
-            url = '/results/?nodes=' + n + '&prob=' + p
+            url = '/results/random/?nodes=' + n + '&prob=' + p
             return redirect(url)
 
         return render(request, self.template_name, {'form_upload': form_upload, 'form_generate': form_generate})
 
 
-class ResultsView(View):
-    template_name = "home/results.html"
+class RandomNetworkResultsView(View):
+    template_name = "home/random_network_results.html"
 
     def get(self, request):
         # n = 10
@@ -68,6 +69,52 @@ class ResultsView(View):
             'expected_average_distance': properties['expected_average_distance'],
             'expected_clustering_coefficient': properties['expected_clustering_coefficient'],
             'plot': properties['interactive_network_plot']
+        })
+
+
+class RealNetworkResultsView(View):
+    template_name = 'home/real_network_results.html'
+
+    def get(self, request, network_filename):
+
+        network = _load_graph_csv_from_file_system(network_filename)
+        is_too_big = _is_network_too_big(network.number_of_nodes(), network.number_of_edges(), network, network_filename)
+
+        if is_too_big:
+            return render(request, self.template_name, {
+                'is_too_big': is_too_big,
+                'no_of_nodes': network.number_of_nodes(),
+                'no_of_edges': network.number_of_edges(),
+                'degree_distribution_plot_path_file_name': network_filename,
+                'degree_distribution_plot_path': settings.MEDIA_URL + 'plot/' + network_filename + '_degree_distribution_log_binning.png',
+
+            })
+        else:
+            properties = _compute_real_network_properties(network_filename, network)
+            return render(request, self.template_name, {
+                'no_of_nodes': properties['no_of_nodes'],
+                'no_of_edges': properties['no_of_edges'],
+                'average_degree': properties['average_degree'],
+                'degree_second_moment': properties['degree_second_moment'],
+                'real_kmax': properties['real_kmax'],
+                'real_kmin': properties['real_kmin'],
+                'average_distance': properties['average_distance'],
+                'diameter': properties['diameter'],
+                'global_clustering_coefficient': properties['global_clustering_coefficient'],
+                'average_clustering_coefficient': properties['average_clustering_coefficient']
+            })
+
+
+class ScaleFreeNetworkResultsView(View):
+    template_name = 'home/scale_free_network_results.html'
+
+    def get(self, request):
+
+        properties = _compute_real_network_properties()
+
+        return render(request, self.template_name, {
+            'is_too_big': properties['is_too_big'],
+            'analyzed_network_properties': properties['analyzed_network_properties']
         })
 
 
