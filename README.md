@@ -1,8 +1,8 @@
 # CZ4071 - Network Science
 
-Instructions for set-up  
+**Instructions for set-up**  
 
-Install python  
+Install python  (https://www.python.org/downloads/release/python-368/)
 python==3.6.8  
 
 Add python to computer system environment variables if needed.  
