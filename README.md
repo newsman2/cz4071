@@ -19,5 +19,5 @@ Ensure that all libraries are installed successfully.
 
 Run **python manage.py runserver**  
 Open up a web browser (recommended FireFox)  
-Go to http://localhost:8888  
+Go to http://localhost:8000  
 You should see the project.  
