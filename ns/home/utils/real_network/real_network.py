@@ -17,69 +17,66 @@ import os
 
 def _compute_real_network_properties(network_name, network):
 
-    #Number of nodes
+    # Number of nodes
     no_of_nodes = network.number_of_nodes()
-    #Number of edges
+    # Number of edges
     no_of_edges = network.number_of_edges()
 
     # Real Network Properties
 
-    #Each node with its degree
+    # Each node with its degree
     degree_count = degree_analyzer.count_degree(network)
-    #List of frequency of degree. The position is the k degree. Example position 1 of the list means the frequency of degree 1
+    # List of frequency of degree. The position is the k degree. Example position 1 of the list means the frequency of degree 1
     degree_distribution = degree_analyzer.calculate_degree_distribution(network)
 
     # pool = mp.Pool(mp.cpu_count())
     # result = pool.map(_generate_network_image, network_name)
 
-    network_image_url = _generate_network_image(network_name, network)
+    # network_image_url = _generate_network_image(network_name, network)
 
     degree_prob_distribution_plot_url = degree_analyzer.plot_and_store_degree_prob_distribution(network_name, degree_count)
 
-    #Degree Moment which each value to the power of n given n in the input parameter
+    # Degree Moment which each value to the power of n given n in the input parameter
 
-    #Mean
+    # Mean
     average_degree = degree_analyzer.calculate_degree_moment(degree_count, n=1)
-    #Nth moment where n is 2 in this method
+    # Nth moment where n is 2 in this method
     degree_second_moment = degree_analyzer.calculate_degree_moment(degree_count, n=2)
 
-    #Find the maximum/highest degree of the graph
+    # Find the maximum/highest degree of the graph
     real_kmax = degree_analyzer.find_largest_degree(degree_distribution)
-    #Find the minimum/lowest degree of the graph
+    # Find the minimum/lowest degree of the graph
     real_kmin = degree_analyzer.find_smallest_degree(degree_distribution)
 
-    #Find global clustering
+    # Find global clustering
     global_clustering_coefficient = clustering_coefficient_analyzer.calculate_global_clustering_coefficient(network)
-    #Find average clustering
+    # Find average clustering
     average_clustering_coefficient = clustering_coefficient_analyzer.calculate_average_clustering_coefficient(network)
 
-
-    distance_distribution = distance_analyzer.get_distance_distribution(network)
-    distance_prob_distribution = distance_analyzer.calculate_distance_prob_distribution(distance_distribution)
-    distance_prob_distribution_plot_file_name = distance_analyzer.plot_and_store_distance_prob_distribution(
-        network_name,
-        distance_prob_distribution
-    )
-    
+    # distance_distribution = distance_analyzer.get_distance_distribution(network)
+    # distance_prob_distribution = distance_analyzer.calculate_distance_prob_distribution(distance_distribution)
+    # distance_prob_distribution_plot_file_name = distance_analyzer.plot_and_store_distance_prob_distribution(
+    #     network_name,
+    #     distance_prob_distribution
+    # )
 
     # find the average distance of the graph path
-    average_distance = distance_analyzer.calculate_average_distance(network)
-    #find the diameter of the graph
-    diameter = distance_analyzer.find_network_diameter(network)
+    # average_distance = distance_analyzer.calculate_average_distance(network)
 
-    is_too_big = _is_network_too_big(no_of_nodes, no_of_edges)
+    # find the diameter of the graph
+    # diameter = distance_analyzer.find_network_diameter(network)
 
     return {
         'no_of_nodes': no_of_nodes,
         'no_of_edges': no_of_edges,
-        #'degree_prob_distribution_plot_file_name': degree_prob_distribution_plot_url,
+        # 'degree_prob_distribution_plot_file_name': degree_prob_distribution_plot_url,
         'average_degree': average_degree,
         'degree_second_moment': degree_second_moment,
         'real_kmax': real_kmax,
         'real_kmin': real_kmin,
-        #'distance_prob_distribution_plot_file_name': distance_prob_distribution_plot_file_name,
-        'average_distance': average_distance,
-        'diameter': diameter,
+        # 'distance_prob_distribution_plot_file_name': distance_prob_distribution_plot_file_name,
+        # 'average_distance': average_distance,
+        # 'diameter': diameter,
         'global_clustering_coefficient': global_clustering_coefficient,
         'average_clustering_coefficient': average_clustering_coefficient
     }

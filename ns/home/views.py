@@ -82,14 +82,22 @@ class RealNetworkResultsView(View):
         is_too_big = _is_network_too_big(network.number_of_nodes(), network.number_of_edges(), network, network_filename)
 
         scale_properties = _compute_scale_free_properties(network)
+        real_properties = _compute_real_network_properties(network_filename, network)
 
         if is_too_big:
             return render(request, self.template_name, {
                 'is_too_big': is_too_big,
-                'no_of_nodes': network.number_of_nodes(),
-                'no_of_edges': network.number_of_edges(),
+                'no_of_nodes': real_properties['no_of_nodes'],
+                'no_of_edges': real_properties['no_of_edges'],
                 'degree_distribution_plot_path_file_name': network_filename,
                 'degree_distribution_plot_path': settings.MEDIA_URL + 'plot/' + network_filename + '_degree_distribution_log_binning.png',
+
+                'average_degree': real_properties['average_degree'],
+                'degree_second_moment': real_properties['degree_second_moment'],
+                'real_kmax': real_properties['real_kmax'],
+                'real_kmin': real_properties['real_kmin'],
+                'global_clustering_coefficient': real_properties['global_clustering_coefficient'],
+                'average_clustering_coefficient': real_properties['average_clustering_coefficient'],
 
                 'degree_exponent': scale_properties['degree_exponent'],
                 'expected_kmax': scale_properties['expected_kmax'],
@@ -97,7 +105,7 @@ class RealNetworkResultsView(View):
                 'expected_degree_exponent': scale_properties['expected_degree_exponent']
             })
         else:
-            real_properties = _compute_real_network_properties(network_filename, network)
+
             return render(request, self.template_name, {
                 'no_of_nodes': real_properties['no_of_nodes'],
                 'no_of_edges': real_properties['no_of_edges'],
@@ -115,19 +123,6 @@ class RealNetworkResultsView(View):
                 'expected_average_distance': scale_properties['expected_average_distance'],
                 'expected_degree_exponent': scale_properties['expected_degree_exponent']
             })
-
-
-class ScaleFreeNetworkResultsView(View):
-    template_name = 'home/scale_free_network_results.html'
-
-    def get(self, request):
-
-        properties = _compute_real_network_properties()
-
-        return render(request, self.template_name, {
-            'is_too_big': properties['is_too_big'],
-            'analyzed_network_properties': properties['analyzed_network_properties']
-        })
 
 
 def convert_txt_to_csv(file_name, file_format, file):
