@@ -12,7 +12,8 @@ Ensure that you install the correct version
 
 Install pip if needed however python should have install pip by default.  
 Change directory to 'cz4071/ns'  
-You should see a ns-requirements.txt file. This file contains all the required libraries needed for this project.
+You should see a ns-requirements.txt file.  
+This file contains all the required libraries needed for this project.  
 Run pip install -r ns-requirements.txt  
 Ensure that all libraries are installed successfully.  
 
