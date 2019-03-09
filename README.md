@@ -2,7 +2,7 @@
 
 **Instructions for set-up**  
 
-Install python  (https://www.python.org/downloads/release/python-368/)
+Install python (https://www.python.org/downloads/release/python-368/)  
 python==3.6.8  
 
 Add python to computer system environment variables if needed.  
