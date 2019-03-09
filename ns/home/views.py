@@ -6,6 +6,7 @@ from ns import settings
 from django.shortcuts import redirect
 from .utils.random_network import _compute_random_network_properties
 from .utils.real_network.real_network import _compute_real_network_properties, _load_graph_csv_from_file_system, _is_network_too_big, plot_real_interactive_network
+from .utils.scale_free_network.scale_free_network import _compute_scale_free_properties
 from multiprocessing import Pool
 
 
@@ -80,6 +81,8 @@ class RealNetworkResultsView(View):
         network = _load_graph_csv_from_file_system(network_filename)
         is_too_big = _is_network_too_big(network.number_of_nodes(), network.number_of_edges(), network, network_filename)
 
+        scale_properties = _compute_scale_free_properties(network)
+
         if is_too_big:
             return render(request, self.template_name, {
                 'is_too_big': is_too_big,
@@ -88,20 +91,29 @@ class RealNetworkResultsView(View):
                 'degree_distribution_plot_path_file_name': network_filename,
                 'degree_distribution_plot_path': settings.MEDIA_URL + 'plot/' + network_filename + '_degree_distribution_log_binning.png',
 
+                'degree_exponent': scale_properties['degree_exponent'],
+                'expected_kmax': scale_properties['expected_kmax'],
+                'expected_average_distance': scale_properties['expected_average_distance'],
+                'expected_degree_exponent': scale_properties['expected_degree_exponent']
             })
         else:
-            properties = _compute_real_network_properties(network_filename, network)
+            real_properties = _compute_real_network_properties(network_filename, network)
             return render(request, self.template_name, {
-                'no_of_nodes': properties['no_of_nodes'],
-                'no_of_edges': properties['no_of_edges'],
-                'average_degree': properties['average_degree'],
-                'degree_second_moment': properties['degree_second_moment'],
-                'real_kmax': properties['real_kmax'],
-                'real_kmin': properties['real_kmin'],
-                'average_distance': properties['average_distance'],
-                'diameter': properties['diameter'],
-                'global_clustering_coefficient': properties['global_clustering_coefficient'],
-                'average_clustering_coefficient': properties['average_clustering_coefficient']
+                'no_of_nodes': real_properties['no_of_nodes'],
+                'no_of_edges': real_properties['no_of_edges'],
+                'average_degree': real_properties['average_degree'],
+                'degree_second_moment': real_properties['degree_second_moment'],
+                'real_kmax': real_properties['real_kmax'],
+                'real_kmin': real_properties['real_kmin'],
+                'average_distance': real_properties['average_distance'],
+                'diameter': real_properties['diameter'],
+                'global_clustering_coefficient': real_properties['global_clustering_coefficient'],
+                'average_clustering_coefficient': real_properties['average_clustering_coefficient'],
+
+                'degree_exponent': scale_properties['degree_exponent'],
+                'expected_kmax': scale_properties['expected_kmax'],
+                'expected_average_distance': scale_properties['expected_average_distance'],
+                'expected_degree_exponent': scale_properties['expected_degree_exponent']
             })
 
 

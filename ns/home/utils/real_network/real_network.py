@@ -95,7 +95,7 @@ def _store_graph_csv_to_file_system(graph_name, graph_csv):
 
 
 def _load_graph_csv_from_file_system(graph_name):
-    network = pd.read_csv(PATH.CSV_NETWORK_DIR_PATH + "\\" + graph_name + ".csv")
+    network = pd.read_csv(PATH.CSV_NETWORK_DIR_PATH + "/" + graph_name + ".csv")
     tmp = list(zip(network['FromNodeId'], network['ToNodeId']))
     g = nx.Graph()
     g.add_edges_from(tmp)

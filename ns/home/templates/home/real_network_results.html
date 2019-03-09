@@ -1,11 +1,8 @@
 {% extends 'home/base_template.html' %}
 {% block content %}
-
-
-
-
-
-
+    <div class="border-bottom">
+    <h2>Real Network</h2>
+    </div>
 
 {% if is_too_big %}
 <p class="lead">The network is too big!</p>
@@ -32,6 +29,15 @@
 <img src="{{ degree_distribution_plot_path }}" alt="{{ degree_distribution_plot_path_file_name }}">
 
 
+    <div class="border-bottom">
+    <h2>Scale-free Network</h2>
+    </div>
 
+<p>
+    degree_exponent: {{ degree_exponent }}<br>
+    Expected kmax: {{ expected_kmax }}<br>
+    Expected average distance: {{ expected_average_distance }}<br>
+    Expected degree exponent {{ expected_degree_exponent }}
+</p>
 
 {% endblock %}
