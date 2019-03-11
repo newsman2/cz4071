@@ -114,4 +114,7 @@ dmypy.json
 .pyre/
 
 # Uploads
-uploads/
+.csv
+.png
+.jpg
+uploads/network_files/*.txt
