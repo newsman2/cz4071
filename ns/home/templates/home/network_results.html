@@ -1,0 +1,68 @@
+{% extends 'home/base_template.html' %}
+{% block content %}
+
+
+{% if expected_degree_distribution_plot_file_name %}
+<img alt="{{ expected_degree_distribution_plot_file_name }}" src="{{ degree_distribution_plot_path }}">
+{% endif %}
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            {#<div id="plot_container" class="col-md-8 col-md-offset-2">{{ra_plot|safe}}</div>#}
+            <div class="col-md-12">{{ra_plot|safe}}</div>
+        </div>
+
+        <div class="col-md-6">
+            <strong>Random Network</strong>
+
+            <p>
+                Probability: {{ ra_p }}<br>
+                Nodes: {{ ra_expected_no_of_nodes }}<br>
+                Expected # of edges: {{ ra_expected_no_of_edges }}<br>
+                Degree Distribution File Name: {{ ra_expected_degree_distribution_plot_file_name }}<br>
+                Expected Average Degree: {{ ra_expected_average_degree }}<br>
+                Expected Regime Type: {{ ra_expected_regime_type }}<br>
+                Expected Average Distance: {{ ra_expected_average_distance }}<br>
+                Expected Clustering Coefficient: {{ ra_expected_clustering_coefficient }}
+            </p>
+        </div>
+
+
+        <div class="col-md-6">
+
+            {% if re_is_too_big %}
+
+            <p><strong>Real Network</strong></p>
+            <p class="lead">The network is too big!</p>
+            <p>
+                Nodes: {{ re_no_of_nodes }}<br>
+                Edges: {{ re_no_of_edges }}<br>
+                Average Degree: {{ re_average_degree }}<br>
+                Degree second moment: {{ re_degree_second_moment }}<br>
+                Real kmax: {{ re_real_kmax }}<br>
+                Real kmin: {{ re_real_kmin }}<br>
+                Global clustering coefficient: {{ re_global_clustering_coefficient }}<br>
+                Average clustering coefficient: {{ re_average_clustering_coefficient }}<br>
+
+            </p>
+            {% endif %}
+            <img src="{{ re_degree_distribution_plot_path }}" alt="{{ re_degree_distribution_plot_path_file_name }}">
+
+
+            <p><strong>Scale-free Network</strong></p>
+            <p>
+                Degree exponent: {{ sc_degree_exponent }}<br>
+                Expected kmax: {{ sc_expected_kmax }}<br>
+                Expected average distance: {{ sc_expected_average_distance }}<br>
+                Expected degree exponent {{ sc_expected_degree_exponent }}
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
