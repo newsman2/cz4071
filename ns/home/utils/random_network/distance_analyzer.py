@@ -1,14 +1,14 @@
-# from graph_tool import topology
-import matplotlib
-matplotlib.use('Agg')
+#from graph_tool import topology
 import os
 from multiprocessing.spawn import freeze_support
-from .. import path as PATH
+
+from .. import path
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
 from multiprocessing import Process, Queue
 from multiprocessing.managers import BaseManager
+import math
 
 
 def _shortest_distance_runner_small_network(result_queue, network, thread_id, n_threads=8):
@@ -41,12 +41,14 @@ def _shortest_distance_runner_small_network(result_queue, network, thread_id, n_
     result_queue.put(distance_distribution)
 
 
+
 def _convert_multiprocessing_queue_to_list(queue):
     result = []
     while not queue.empty():
         result.append(queue.get())
 
     return result
+
 
 
 def combine_multiple_distance_distributions(distance_distribution_list):
@@ -60,9 +62,9 @@ def combine_multiple_distance_distributions(distance_distribution_list):
             result[k] += v
 
     return result
+    
 
-
-# If i am not wrong, this method get the distance of any 2 pair of nodes
+#If i am not wrong, this method get the distance of any 2 pair of nodes
 
 def get_distance_distribution(network, n_process=4):
     # n_nodes = network.num_vertices()
@@ -87,7 +89,11 @@ def get_distance_distribution(network, n_process=4):
         #     target=None,
         #     directed=False
         # )
-        distance_map = nx.shortest_path(network, source=v, target=None, weight=None)
+        # distance_map = nx.shortest_path(network, source=v, target=None, weight=None)
+
+        distance_map = nx.single_source_shortest_path_length(network, source=v)
+
+        # distance_map = nx.all_pairs_shortest_path_length(network)
 
         # distance_array = distance_map.get_array()[v_id:]
         # distance_array = distance_map.ToArray()
@@ -96,7 +102,7 @@ def get_distance_distribution(network, n_process=4):
         for key, value in distance_map.items():
             # distance = int(j)
             distancewithsq = distance_map[key]
-            distance = int(distancewithsq[0])
+            distance = int(distancewithsq)
 
             if distance not in distance_distribution:
                 distance_distribution[distance] = 0
@@ -134,7 +140,7 @@ def find_network_diameter(network):
     return nx.diameter(network)
 
 
-# Not sure if we are using this method
+#Not sure if we are using this method
 
 def calculate_distance_prob_distribution(distance_distribution):
     result = {}
@@ -149,18 +155,20 @@ def calculate_distance_prob_distribution(distance_distribution):
         result[k] = float(distance_distribution[k]) / float(total)
 
     return result
-
+    
 
 # plotting of graph
 def plot_and_store_distance_prob_distribution(network_name, distance_prob_distribution):
     file_name = network_name + '_distance_distribution.png'
-    file_path = os.path.join(PATH.DB_PLOT_DIR_PATH, file_name)
+    file_path = os.path.join(path.DB_PLOT_DIR_PATH, file_name)
     print(distance_prob_distribution)
 
     x = []
     y = []
 
     for k, v in distance_prob_distribution.items():
+        # x.append(math.log10(k))
+        # y.append(math.log10(v))
         x.append(k)
         y.append(v)
 
@@ -170,25 +178,55 @@ def plot_and_store_distance_prob_distribution(network_name, distance_prob_distri
     plt.xlabel('d')
     plt.ylabel('P(d)')
     plt.savefig(file_path)
+    plt.show()
     plt.close()
 
     return file_name
 
 
+
 def main():
-    BaseManager.register('get_queue', callable=lambda: Queue.Queue())
+    BaseManager.register('get_queue', callable=lambda:  Queue.Queue())
 
     manager = BaseManager(address=('', 5000), authkey='abc')
     manager.start()
     manager.shutdown()
-
 
 if __name__ == '__main__':
     # freeze_support() here if program needs to be frozen
     freeze_support()
     # main()  # execute this only when run directly, not when imported!
 
-# The main here seems to be used for random network
+
+# def get_distance_distribution(network, n_process=4):
+#     n_nodes = network.num_vertices()
+#     n_edges = network.num_edges()
+#
+#     if n_nodes > 10000 or n_edges > 500000:
+#         return None
+#
+#     processes = []
+#     result_queue = Queue(n_process)
+#     for i in range(n_process):
+#         p = Process(
+#             target=_shortest_distance_runner_small_network,
+#             args=(result_queue, network, i, n_process,)
+#         )
+#
+#         # print 'Starting process ID:', i
+#         p.start()
+#         processes.append(p)
+#
+#     # print 'Processes created!'
+#     for p in processes:
+#         p.join()
+#
+#     # print 'Done!'
+#
+#     result_list = _convert_multiprocessing_queue_to_list(result_queue)
+#     return combine_multiple_distance_distributions(result_list)
+
+#The main here seems to be used for random network
 #
 # if __name__ == '__main__':
 #     from graph.generator import random_network_generator

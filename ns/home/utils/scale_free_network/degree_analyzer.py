@@ -1,10 +1,12 @@
 import math
 import os
 from collections import Counter
+
 import matplotlib.pyplot as plt
 import networkx as nx
-from .. import path as path
-from . import plot_util
+
+from .. import path
+from .. import plot_util
 
 
 
@@ -14,8 +16,6 @@ def count_degree(network):
     for (node, val) in network.degree():
         dic_list[node] = val
     return dic_list
-
-
 
 
 def calculate_degree_distribution(network):

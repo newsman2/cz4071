@@ -2,7 +2,8 @@ from scipy.stats import linregress
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from .plot_util import log_binning, get_log_log_points, plot_scatter
+
+from ..plot_util import log_binning, get_log_log_points, plot_scatter
 
 
 def calculate_real_degree_exponent(degree_count, plot=False):

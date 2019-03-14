@@ -4,7 +4,7 @@ from .forms import NetworkForm
 import pandas as pd
 from ns import settings
 from django.shortcuts import redirect
-from .utils.random_network import _compute_random_network_properties
+from .utils.random_network.random_network import _compute_random_network_properties
 from .utils.real_network.real_network import _compute_real_network_properties, _load_graph_csv_from_file_system, _is_network_too_big, plot_real_interactive_network
 from .utils.scale_free_network.scale_free_network import _compute_scale_free_properties
 from multiprocessing import Pool
