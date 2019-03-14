@@ -1,5 +1,11 @@
 # CZ4071 - Network Science
 
+## Minimum Computer Requirements (Estimated Loading Time < 5mins)
+CPU: i9-9900k  
+GPU: RTX 2070  
+RAM: 32GB 3200Mhz  
+Storage: Samsung SSD Evo 840  
+
 ## Instructions for set-up  
 
 Install python (https://www.python.org/downloads/release/python-368/)  
@@ -20,4 +26,26 @@ Ensure that all libraries are installed successfully.
 Run **python manage.py runserver**  
 Open up a web browser (recommended FireFox)  
 Go to http://localhost:8000  
-You should see the project.  
+You should see the project.    
+
+**DO NOTE THAT IT IS NORMAL THAT THE SERVER STOP AFTER EVERY RUN**    
+
+## FAQ  
+Q: Why do my web server stops after every run?  
+A: This is normal as there is a bug with Matplotlib library whereas the default backend for rendering causes the main thread to stop.    
+
+Q: Why does it take so long to generate a network more than a 1000 nodes?
+A: It is not recommended to generate a random network with more than a 1000 nodes unless you are using a super-computer. As it requires a long amount of processing time.    
+
+Q: Unable to run the server!  
+A: Please note that you have to install all of the required libraries versions in ns-requirements.txt. Any missing library might cause an error.    
+
+Q: Application not executing after inputting the values.  
+A: Please close each interactive diagram prompt in order for the application to continue running. Do not worry all the images are saved in uploads/plot/ folder. You can view all images after loading into the next page.    
+
+Q: Error - no such table: home_network  
+A: Ensure that you have db.sqlite3 file in your 'cz4071/ns/' folder.    
+
+Q: Error - network_csv_files / network_files / plot folder does not exists.  
+A: Ensure that those folders are created beforehand in the uploads folder or there will be an error. Folders are not created automatically.
+
