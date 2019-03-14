@@ -1,5 +1,11 @@
 # CZ4071 - Network Science
 
+## Minimum Computer Requirements for efficient Loading (Estimated Loading Time < 5mins)
+CPU: i9-9900k  
+GPU: RTX 2070  
+RAM: 32GB 3200Mhz  
+Storage: Samsung SSD Evo 840  
+
 ## Instructions for set-up  
 
 Install python (https://www.python.org/downloads/release/python-368/)  
@@ -20,4 +26,13 @@ Ensure that all libraries are installed successfully.
 Run **python manage.py runserver**  
 Open up a web browser (recommended FireFox)  
 Go to http://localhost:8000  
-You should see the project.  
+You should see the project.    
+
+**DO NOTE THAT IT IS NORMAL THAT THE SERVER STOP AFTER EVERY RUN**    
+
+##FAQ  
+Q: Why do my web server stops after every run?  
+A: This is normal as there is a bug with Matplotlib library whereas the default backend for rendering causes the main thread to stop.    
+
+Q: Why does it take so long to generate a network more than a 1000 nodes?
+A: It is not recommended to generate a random network with more than a 1000 nodes unless you are using a super-computer. As it requires a long amount of processing time.
