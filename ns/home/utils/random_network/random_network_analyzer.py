@@ -125,7 +125,7 @@ def plot_degree_centrality(networkx_graph):
 
     fig = go.Figure(data=[go.Scatter(x=x, y=y)],
                     layout=go.Layout(
-                        title='Closeness',
+                        title='Degree Centrality',
                         titlefont=dict(size=16),
                         showlegend=False,
                         hovermode='closest',

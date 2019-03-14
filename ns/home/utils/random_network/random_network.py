@@ -135,6 +135,4 @@ def plot_random_interactive_network(n, p):
     return plot_div
 
 
-if __name__ == "__main__":
 
-    _compute_random_network_properties("random",50,0.01)

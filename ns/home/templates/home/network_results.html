@@ -1,67 +1,112 @@
 {% extends 'home/base_template.html' %}
 {% block content %}
-
-
-{% if expected_degree_distribution_plot_file_name %}
-<img alt="{{ expected_degree_distribution_plot_file_name }}" src="{{ degree_distribution_plot_path }}">
-{% endif %}
-
-
 <div class="container">
+
     <div class="row">
 
+        <br><strong>Real Network Graph Image</strong><br>
+        <img width="100%" height="100%" src="{{ re_real_network_graph_file_path }}"
+             alt="{{ re_real_network_graph_file_name }}"><br>
+
+
         <div class="col-md-12 border-bottom mb-3">
-            {#<div id="plot_container" class="col-md-8 col-md-offset-2">{{ra_plot|safe}}</div>#}
-            <div class="col-md-12">{{ra_plot|safe}}</div>
+            {#<div id="plot_container" class="col-md-8 col-md-offset-2">{{ra_interactive_network_plot|safe}}</div>#}
+            <div class="col-md-12">{{ra_interactive_network_plot|safe}}</div>
         </div>
 
+
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <strong>Random Network</strong>
-
             <p>
                 Probability: {{ ra_p }}<br>
-                Nodes: {{ ra_expected_no_of_nodes }}<br>
-                Expected # of edges: {{ ra_expected_no_of_edges }}<br>
-                Degree Distribution File Name: {{ ra_expected_degree_distribution_plot_file_name }}<br>
-                Expected Average Degree: {{ ra_expected_average_degree }}<br>
-                Expected Regime Type: {{ ra_expected_regime_type }}<br>
-                Expected Average Distance: {{ ra_expected_average_distance }}<br>
-                Expected Clustering Coefficient: {{ ra_expected_clustering_coefficient }}
+                Expected no of nodes: {{ ra_expected_no_of_nodes }}<br>
+                Expected no of edges: {{ ra_expected_no_of_edges }}<br>
+                Expected average degree: {{ ra_expected_average_degree }}<br>
+
+                Expected regime type: {{ ra_expected_regime_type }}<br>
+                Expected clustering coefficient: {{ ra_expected_clustering_coefficient }}<br>
+                {% if ra_expected_diameter %}Expected diameter: {{ ra_expected_diameter }}<br>{% endif %}
+                {% if ra_expected_average_distance %}Expected average distance: {{ ra_expected_average_distance }}<br>{% endif %}
+
             </p>
         </div>
 
-
         <div class="col-md-6">
-
-            {% if re_is_too_big %}
-
-            <p><strong>Real Network</strong></p>
-            <p class="lead">The network is too big!</p>
+            <strong>Real Network</strong>
             <p>
-                Nodes: {{ re_no_of_nodes }}<br>
-                Edges: {{ re_no_of_edges }}<br>
-                Average Degree: {{ re_average_degree }}<br>
-                Degree second moment: {{ re_degree_second_moment }}<br>
-                Real kmax: {{ re_real_kmax }}<br>
-                Real kmin: {{ re_real_kmin }}<br>
-                Global clustering coefficient: {{ re_global_clustering_coefficient }}<br>
-                Average clustering coefficient: {{ re_average_clustering_coefficient }}<br>
-
+                no_of_nodes: {{ re_no_of_nodes }}<br>
+                no_of_edges: {{ re_no_of_edges }}<br>
+                real_kmax: {{ re_real_kmax }}<br>
+                real_kmin: {{ re_real_kmin }}<br>
+                average_degree: {{ re_average_degree }}<br>
+                avg_clustering_coef: {{ re_avg_clustering_coef }}<br>
+                global_clustering_coefficient: {{ re_global_clustering_coefficient }}<br>
+                degree_first_moment: {{ re_degree_first_moment }}<br>
+                degree_second_moment: {{ re_degree_second_moment }}<br>
+                degree_third_moment: {{ re_degree_third_moment }}<br>
             </p>
-            {% endif %}
-            <img src="{{ re_degree_distribution_plot_path }}" alt="{{ re_degree_distribution_plot_path_file_name }}">
 
-
-            <p><strong>Scale-free Network</strong></p>
+            <strong>Scale-free Network</strong>
             <p>
-                Degree exponent: {{ sc_degree_exponent }}<br>
                 Expected kmax: {{ sc_expected_kmax }}<br>
                 Expected average distance: {{ sc_expected_average_distance }}<br>
                 Expected degree exponent {{ sc_expected_degree_exponent }}
             </p>
         </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <strong>Expected Degree Distribution Plot Image</strong><br>
+            <img width="512" height="384" src="{{ ra_expected_degree_distribution_plot_file_path }}"
+                 alt="{{ ra_expected_degree_distribution_plot_file_name }}">
+
+            <br><br><strong>Expected Distance Distribution Plot Image</strong><br>
+            <img width="512" height="384" src="{{ ra_expected_distance_distribution_plot_file_path }}"
+                 alt="{{ ra_expected_distance_distribution_plot_file_name }}">
+
+            <br><br><strong>Degree Centrality Interactive Graph</strong><br>
+            <div class="col-md-12 border-bottom mb-3">
+                {#<div class="col-md-8 col-md-offset-2">{{ra_degree_centrality_interactive_graph|safe}}</div>#}
+                <div class="col-md-12">{{ra_degree_centrality_interactive_graph|safe}}</div>
+            </div>
+
+
+            <br><br><strong>Betweeness Interactive Graph</strong> <br>
+            <div class="col-md-12 border-bottom mb-3">
+                {#<div class="col-md-8 col-md-offset-2">{{ra_betweeness_interactive_graph|safe}}</div>#}
+                <div class="col-md-12">{{ra_betweeness_interactive_graph|safe}}</div>
+            </div>
+
+            <br><br><strong>Closeness Interactive Graph</strong><br>
+            <div class="col-md-12 border-bottom mb-3">
+                {#<div class="col-md-8 col-md-offset-2">{{ra_closeness_interactive_graph|safe}}</div>#}
+                <div class="col-md-12">{{ra_closeness_interactive_graph|safe}}</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <strong>Degree Probability Distribution Plot Image</strong><br>
+            <img width="512" height="384" src="{{ re_degree_prob_distribution_plot_file_path }}"
+                 alt="{{ re_degree_prob_distribution_plot_file_name }}"><br>
+
+            <br><strong>Cluster Coefficient Plot Image</strong><br>
+            <img width="512" height="384" src="{{ re_cluster_coeff_plot_file_path }}"
+                 alt="{{ re_cluster_coeff_plot_file_name }}"><br>
+
+            <br><strong>Degree Correlation Plot Image</strong><br>
+            <img width="512" height="384" src="{{ re_degree_corr_plot_file_path }}"
+                 alt="{{ re_degree_corr_plot_file_name }}"><br>
+        </div>
 
     </div>
+
+
 </div>
 
 

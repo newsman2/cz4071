@@ -1,9 +1,9 @@
 #from graph_tool import topology
 import os
 from multiprocessing.spawn import freeze_support
-
 from .. import path
 import networkx as nx
+
 import matplotlib.pyplot as plt
 import numpy as np
 from multiprocessing import Process, Queue

@@ -4,6 +4,7 @@ from ns import settings
 # ROOT_DIR_PATH = os.path.abspath(os.path.dirname(__file__))
 
 ROOT_DIR_PATH = os.path.abspath(settings.MEDIA_ROOT)
+TXT_NETWORK_DIR_PATH = os.path.join(settings.MEDIA_ROOT, 'network_files')
 CSV_NETWORK_DIR_PATH = os.path.join(settings.MEDIA_ROOT, 'network_csv_files')
 DB_PLOT_DIR_PATH = os.path.join(settings.MEDIA_ROOT, 'plot')
 

@@ -2,6 +2,8 @@ from . import degree_analyzer as da
 from . import clustering as ca
 from . import degree_correlation as dc
 import networkx as nx
+from .. import path
+
 from .real_network import _load_graph_csv_from_file_system
 
 
@@ -21,9 +23,9 @@ class Graph:
         if self.loaded:
             return
 
-        self.networkx = _load_graph_csv_from_file_system("amazon");
+        self.networkx = _load_graph_csv_from_file_system(self.graph_name)
 
-        with open(self.graph_name + ".txt", "r") as input_graph:
+        with open(path.TXT_NETWORK_DIR_PATH + "\\" + self.graph_name + ".txt", "r") as input_graph:
             for line in input_graph:
                 if line.startswith('#'):
                     continue
@@ -52,6 +54,7 @@ class Graph:
 
             self.network = s_network
             self.loaded = True
+
     def neighbor_of_node(self, node):
         return self.network[node]
 
@@ -105,141 +108,3 @@ class Graph:
 
     def plot_store_degree_correlation(self):
         dc.plot_store_degree_correlation(self.graph_name, self.get_degree_correlation())
-
-    # def plot_closeness(self):
-    #    closeness = nx.closeness_centrality(self.networkx_graph)
-    #    x = list(closeness.keys())
-    #    y = list(closeness.values())
-    #    print(x)
-    #    print(y)
-    #
-    #    p.offline.plot({
-    #        "data": [go.Scatter(x=x, y=y)],
-    #        "layout": go.Layout(title="closeness")
-    #    }, auto_open=True,  )
-    #
-    # def plot_betweeness(self):
-    #    closeness = nx.betweenness_centrality(self.networkx_graph)
-    #    x = list(closeness.keys())
-    #    y = list(closeness.values())
-    #    print(x)
-    #    print(y)
-    #
-    #    p.offline.plot({
-    #        "data": [go.Scatter(x=x, y=y)],
-    #        "layout": go.Layout(title="betweeness")
-    #    }, auto_open=True,  )
-
-       # def get_data_frame(self, graph_name):
-       #     graph_dict = {"Nodes": "", "Edges": ""}
-       #
-       #     from_node = []
-       #     to_node = []
-       #     df = pd.DataFrame()
-       #
-       #     # graph_name = "amazon"
-       #
-       #     tmp = 0
-       #     node = False
-       #     edge = False
-       #     start = False
-       #
-       #
-       #     with open(self.graph_name + ".txt", "r") as f:
-       #         for line in f:
-       #             for word in line.split():
-       #                 if node == True:
-       #                     graph_dict['Nodes'] = word
-       #                     node = False
-       #                 if edge == True:
-       #                     graph_dict['Edges'] = word
-       #                     edge = False
-       #
-       #                 if start == True:
-       #                     if tmp % 2 == 0:
-       #                         from_node.append(word)
-       #                     else:
-       #                         to_node.append(word)
-       #                 if word == "Nodes:":
-       #                     node = True
-       #                 if word == "Edges:":
-       #                     edge = True
-       #
-       #                 if word == "ToNodeId":
-       #                     start = True
-       #                 tmp += 1
-       #
-       #         df['FromNodeId'] = from_node
-       #         df['ToNodeId'] = to_node
-       #         df['Nodes'] = graph_dict["Nodes"]
-       #         df['Edges'] = graph_dict["Edges"]
-       #
-       #     # you might wanna edit this path to save the file to your preferred location
-       #     # df.to_csv(r"csv\amazon.csv")
-       #     df.to_csv(path.CSV_NETWORK_DIR_PATH + "\\" + graph_name + ".csv")
-
-
-
-# class Graph:
-#     def __init__(self, input_file):
-#         self.graph_file = input_file
-#         self.loaded = False
-#         self.read()
-#
-#     def read(self):
-#         """
-#         Read the graph from the input file provided.
-#         Stores the graph internally in a compressed sparse row format.
-#         """
-#         if self.loaded:
-#             return
-#         self.vertices = [] # the accumulated number of neighbors for vertices
-#         self.edges = [] # neighbors for each vertex
-#         self.degrees = [] # the degree for each vertex
-#         with open(self.graph_file, "r") as input_graph:
-#             # for line in input_graph:
-#             #     if line.startswith('#'):
-#             #         continue
-#             #     self.vertices.append(len(self.edges))
-#             #     cleaned_line = line.rstrip("\n")
-#             #     # special case: no neighbor
-#             #     if cleaned_line == "":
-#             #         self.degrees.append(0)
-#             #     else:
-#             #         destinations = cleaned_line.split()
-#             #         self.degrees.append(len(destinations))
-#             #         for destination in destinations:
-#             #             self.edges.append(int(destination))
-#             for line in input_graph:
-#                 self.vertices.append(len(self.edges))
-#                 cleaned_line = line.rstrip("\n")
-#                 # special case: no neighbor
-#                 if cleaned_line == "":
-#                     self.degrees.append(0)
-#                 else:
-#                     destinations = cleaned_line.split(" ")
-#                     self.degrees.append(len(destinations))
-#                     for destination in destinations:
-#                         self.edges.append(int(destination))
-#         self.vertices.append(len(self.edges))
-#         # count |V| and |E|
-#         self.vertex_count = len(self.vertices) - 1
-#         self.edge_count = len(self.edges)
-#         self.loaded = True
-#
-#     def neighbor_of(self, vertex):
-#         start_index = self.vertices[vertex]
-#         end_index = self.vertices[vertex + 1]
-#         return self.edges[start_index:end_index]
-#
-#     def get_vertices(self):
-#         return range(self.get_vertex_count())
-#
-#     def get_vertex_count(self):
-#         return self.vertex_count
-#
-#     def get_edge_count(self):
-#         return self.edge_count
-#
-#     def get_degrees(self):
-#         return self.degrees

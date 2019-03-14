@@ -1,10 +1,10 @@
-
 from .. import path
-
 import matplotlib
+
 import matplotlib.pyplot as plt
+
 import networkx as nx
-from . import graph
+
 import pandas as pd
 import os
 import math
@@ -138,8 +138,9 @@ def plot_graph(graph, save_dir):
     # nx.draw_networkx(graph, **options)
     # plt.savefig(os.path.join(save_dir, 'graph.png'))
     plt.savefig(file_path)
-    # plt.show()
+    plt.show()
     return file_name
+
 
 def plot_curve(data, x_label, y_label, title, log=False, h_line=None, v_line=None):
     x = list(data.keys())
@@ -172,6 +173,7 @@ def plot_curve(data, x_label, y_label, title, log=False, h_line=None, v_line=Non
     plt.show()
     return file_name
 
+
 def draw_properties(clustering_coef,avg_clustering_coef,degree_corr,degree_distribution,avg_degree,graph):
     # with open(os.path.join(save_dir, "properties.pkl"), "rb") as f:
     #     property_info_dict = pickle.load(f)
@@ -203,8 +205,3 @@ def _load_graph_csv_from_file_system(graph_name):
 # def _is_network_too_big(no_of_nodes, no_of_edges):
 #     return no_of_nodes > 10000 or no_of_edges > 500000
 
-if __name__ == "__main__":
-
-    graph = graph.Graph("csv/amazon")
-
-    _compute_real_network_properties(graph)

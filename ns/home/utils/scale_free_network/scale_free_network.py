@@ -27,6 +27,3 @@ def _compute_scale_free_properties(network):
         'expected_degree_exponent': expected_degree_exponent
     }
 
-if __name__ == "__main__":
-    networkx = _load_graph_csv_from_file_system("amazon")
-    _compute_scale_free_properties(networkx)
