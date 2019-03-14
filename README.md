@@ -30,7 +30,7 @@ You should see the project.
 
 **DO NOTE THAT IT IS NORMAL THAT THE SERVER STOP AFTER EVERY RUN**    
 
-##FAQ  
+## FAQ  
 Q: Why do my web server stops after every run?  
 A: This is normal as there is a bug with Matplotlib library whereas the default backend for rendering causes the main thread to stop.    
 
