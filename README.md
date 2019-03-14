@@ -38,4 +38,7 @@ Q: Why does it take so long to generate a network more than a 1000 nodes?
 A: It is not recommended to generate a random network with more than a 1000 nodes unless you are using a super-computer. As it requires a long amount of processing time.    
 
 Q: Unable to run the server!  
-A: Please note that you have to install all of the required libraries versions in ns-requirements.txt. Any missing library might cause an error.
+A: Please note that you have to install all of the required libraries versions in ns-requirements.txt. Any missing library might cause an error.    
+
+Q: Application not executing after inputting the values.  
+A: Please close each interactive diagram prompt in order for the application to continue running. Do not worry all the images are saved in uploads/plot/ folder. You can view all images after loading into the next page.
